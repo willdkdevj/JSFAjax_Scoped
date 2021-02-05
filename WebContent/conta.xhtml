@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Ajax Contador</title>
+</h:head>
+<body>
+
+	<h:form id="form">
+		<!-- Ação do botão realiza requisição do tipo SessionScoped (Dialogo ativo com servidor até fechar aba) -->
+		<h1>Você pressionou o botão #{formBean.cont} #{formBean.texto}</h1>
+		<h:commandButton value="Incrementar contador" >
+			<f:ajax render="@form" listener="#{formBean.contador}"/>
+		</h:commandButton>
+		<br />
+		<hr />
+		<br />
+		<!-- Ação do botão realiza requisição do tipo RequestScoped (Inicia e Termina dialogo com Servidor) -->
+		<h1>Você pressionou o botão de solicitado do tipo Request #{formrequest.contador}</h1>
+		<h:inputHidden id="contador" value="#{formrequest.contador}"/>
+		<h:commandButton value="Incrementar contado">
+			<f:ajax execute=":form:contador" render="@form" listener="#{formrequest.contadorRequest}"/>
+		</h:commandButton>
+		
+		<h1>Data:
+		<h:outputText value="#{formrequest.data}">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"/>
+		</h:outputText></h1>
+		<h:commandButton value="Atualizar data">
+			<f:ajax render="@form"/>
+		</h:commandButton>
+	</h:form>
+</body>
+</html>
